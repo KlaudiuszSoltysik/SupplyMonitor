@@ -139,3 +139,5 @@ GitHub.sublime-settings
 
 # Custom
 .env
+webserver/settings.py
+.pem

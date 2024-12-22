@@ -129,3 +129,5 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.AllowAny',
     ]
 }
+
+OPENWEATHER_API_KEY = 'c10d9267443928896fb0744b426f195e'
