@@ -40,7 +40,7 @@ class WeatherView(APIView):
             #     'description': data['weather'][0]['description'],
             #     'temperature': data['main']['temp'],
             #     'humidity': data['main']['humidity'],
-            #     'pressure': data['main']['pressure'],
+            #     'pressure': data['main']['pressure'],jj
             # }
             #
             # serializer = WeatherSerializer(return_data)
