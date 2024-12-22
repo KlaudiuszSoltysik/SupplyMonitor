@@ -140,4 +140,4 @@ GitHub.sublime-settings
 # Custom
 .env
 webserver/settings.py
-.pem
+aws_key.pem.pem
