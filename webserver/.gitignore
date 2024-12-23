@@ -138,6 +138,6 @@ GitHub.sublime-settings
 .history
 
 # Custom
-.env
 webserver/settings.py
 aws_key.pem
+.idea
