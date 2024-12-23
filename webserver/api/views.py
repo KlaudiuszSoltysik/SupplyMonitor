@@ -45,3 +45,10 @@ class WeatherView(APIView):
                 {'error': 'Unable to fetch weather data'},
                 status=status.HTTP_400_BAD_REQUEST
             )
+
+class DataBaseInfoView(APIView):
+    def get(self, request, *args, **kwargs):
+        return Response(
+            {'error': 'ass'},
+            status=status.HTTP_400_BAD_REQUEST
+        )
