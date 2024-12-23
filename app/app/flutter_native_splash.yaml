@@ -1,0 +1,27 @@
+flutter_native_splash:
+  # dart run flutter_native_splash:create --path=flutter_native_splash.yaml
+  # dart run flutter_native_splash:remove
+
+  android: true
+  ios: true
+  web: true
+
+  web_image_mode: center
+  fullscreen: true
+
+  color: "#cccccc"
+  image: assets/vw_logo.png
+  branding: assets/branding.png
+  color_dark: "#333333"
+  image_dark: assets/vw_logo_dark.png
+  branding_dark: assets/branding_dark.png
+
+  android_12:
+    image: assets/vw_logo.png
+    color: "#cccccc"
+    icon_background_color: "#cccccc"
+    branding: assets/branding.png
+    image_dark: assets/vw_logo_dark.png
+    color_dark: "#333333"
+    icon_background_color_dark: "#333333"
+    branding_dark: assets/branding_dark.png
