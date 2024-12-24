@@ -1,5 +1,6 @@
 # TODO: Make async function that redo database tables
 # TODO: Auth
+# TODO:
 
 import requests
 from django.conf import settings
