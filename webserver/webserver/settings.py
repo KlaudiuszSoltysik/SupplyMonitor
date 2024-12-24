@@ -75,10 +75,21 @@ WSGI_APPLICATION = 'webserver.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'supply_monitor_db',
+        'USER': 'klaudiusz',
+        'PASSWORD': 'klaudiusz',
+        'HOST': 'supply-monitor-db.c5yyqaaeagc1.eu-north-1.rds.amazonaws.com',
+        'PORT': '5432',
     }
 }
 
@@ -111,7 +122,7 @@ TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
-USE_TZ = True
+USE_TZ = False
 
 
 # Static files (CSS, JavaScript, Images)
@@ -131,3 +142,4 @@ REST_FRAMEWORK = {
 }
 
 OPENWEATHER_API_KEY = 'c10d9267443928896fb0744b426f195e'
+# pip install "psycopg[binary,pool]"

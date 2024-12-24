@@ -1,8 +1,12 @@
 import requests
 from django.conf import settings
+from django.db import transaction
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
+from .models import Organization, Supply, SupplyData
+import pickle
+
 
 class WeatherView(APIView):
     def get(self, request, *args, **kwargs):
@@ -11,7 +15,7 @@ class WeatherView(APIView):
 
         if not lat or not lon:
             return Response(
-                {"error": "Latitude and longitude are required parameters."},
+                {'error': 'Latitude and longitude are required parameters.'},
                 status=status.HTTP_400_BAD_REQUEST
             )
 
@@ -46,9 +50,40 @@ class WeatherView(APIView):
                 status=status.HTTP_400_BAD_REQUEST
             )
 
-class DataBaseInfoView(APIView):
-    def get(self, request, *args, **kwargs):
-        return Response(
-            {'error': 'ass'},
-            status=status.HTTP_400_BAD_REQUEST
-        )
+
+# class UploadGeneratedSupplyData(APIView):
+#     def get(self, request, *args, **kwargs):
+#         with open('data5.txt', 'rb') as file:
+#             loaded_data = pickle.load(file)
+#
+#         organization_name = ''
+#         supply_name = ''
+#
+#         try:
+#             selected_organization = Organization.objects.get(organization=organization_name)
+#             selected_supply = Supply.objects.get(organization=selected_organization, supply=supply_name)
+#         except Organization.DoesNotExist:
+#             return Response({'error': 'Organization not found'}, status=status.HTTP_400_BAD_REQUEST)
+#         except Supply.DoesNotExist:
+#             return Response({'error': 'Supply not found'}, status=status.HTTP_400_BAD_REQUEST)
+#
+#         supply_data_objects = []
+#
+#         for data in loaded_data:
+#             try:
+#                 timestamp = data['timestamp']
+#                 value = data['value']
+#
+#                 supply_data_objects.append(SupplyData(
+#                     supply=selected_supply,
+#                     timestamp=timestamp,
+#                     value=value
+#                 ))
+#
+#             except Exception as e:
+#                 return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+#
+#         with transaction.atomic():
+#             SupplyData.objects.bulk_create(supply_data_objects)
+#
+#         return Response({'response': 'Data uploaded successfully'}, status=status.HTTP_200_OK)
