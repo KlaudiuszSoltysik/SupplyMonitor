@@ -61,15 +61,6 @@ class MediaDetailsScreenState extends State<MediaDetailsScreen> {
           ),
         );
       }
-    } else {
-      for (int i = 0; i < 365; i++) {
-        spots.add(
-          FlSpot(
-            i.toDouble(),
-            random.nextDouble(),
-          ),
-        );
-      }
     }
 
     return LineChartBarData(
@@ -219,10 +210,6 @@ class MediaDetailsScreenState extends State<MediaDetailsScreen> {
                     durationButton(
                       buttonNumber: 3,
                       text: 'rok',
-                    ),
-                    durationButton(
-                      buttonNumber: 4,
-                      text: '3 lata',
                     ),
                   ],
                 ),

@@ -1,7 +1,8 @@
 from django.urls import path
-from .views import WeatherView
+from .views import WeatherView, SupplyDataView
 
 urlpatterns = [
-    path('weather/', WeatherView.as_view(), name='weather_view'),
-    # path('upload/', UploadGeneratedSupplyData.as_view(), name='upload-text-file'),
+    path('weather/', WeatherView.as_view()),
+    path('supply_data/', SupplyDataView.as_view()),
+    # path('upload/', UploadGeneratedSupplyData.as_view()),
 ]

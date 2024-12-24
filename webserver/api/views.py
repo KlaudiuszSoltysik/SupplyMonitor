@@ -1,11 +1,13 @@
+# TODO: Make async function that redo database tables
+# TODO: Auth
+
 import requests
 from django.conf import settings
-from django.db import transaction
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
+from datetime import datetime, timedelta
 from .models import Organization, Supply, SupplyData
-import pickle
 
 
 class WeatherView(APIView):
@@ -15,9 +17,8 @@ class WeatherView(APIView):
 
         if not lat or not lon:
             return Response(
-                {'error': 'Latitude and longitude are required parameters.'},
-                status=status.HTTP_400_BAD_REQUEST
-            )
+                {'error': 'lat and lon are required parameters.'},
+                status=status.HTTP_400_BAD_REQUEST)
 
         api_key = settings.OPENWEATHER_API_KEY
 
@@ -47,8 +48,66 @@ class WeatherView(APIView):
         else:
             return Response(
                 {'error': 'Unable to fetch weather data'},
-                status=status.HTTP_400_BAD_REQUEST
-            )
+                status=status.HTTP_400_BAD_REQUEST)
+
+
+class SupplyDataView(APIView):
+    def get(self, request, *args, **kwargs):
+        org_name = request.query_params.get('org')
+        supply_name = request.query_params.get('supply')
+        last = request.query_params.get('last')
+
+        if not org_name or not supply_name or not last:
+            return Response(
+                {'error': 'org and supply are required parameters.'},
+                status=status.HTTP_400_BAD_REQUEST)
+
+        timestamp = datetime(2024, 12, 24, 8, 0, 0)
+        stop_timestamp = timestamp.replace(minute=timestamp.minute - (timestamp.minute % 15),
+                                          second=0,
+                                          microsecond=0)
+
+        if last == 'day':
+            start_timestamp = stop_timestamp - timedelta(days=1)
+        elif last == 'week':
+            start_timestamp = stop_timestamp - timedelta(weeks=1)
+        elif last == 'month':
+            start_timestamp = stop_timestamp - timedelta(days=30)
+        elif last == 'year':
+            start_timestamp = stop_timestamp - timedelta(days=365)
+        else:
+            return Response(
+                {'error': r"parameter last only accepts 'day', 'week', 'month' or 'year' values"},
+                status=status.HTTP_400_BAD_REQUEST)
+
+        start_timestamp += timedelta(minutes=15)
+
+        organization = Organization.objects.filter(organization=org_name)
+
+        supply = Supply.objects.filter(
+            organization__in=organization,
+            supply=supply_name)
+
+        records = SupplyData.objects.filter(
+            supply__in=supply,
+            timestamp__gte=start_timestamp,
+            timestamp__lte=stop_timestamp)
+
+        records_list = list(records.values())
+        segment_size = len(records_list) // 96
+        means = []
+
+        for i in range(0, len(records_list), segment_size):
+            segment = records_list[i:i + segment_size]
+            sub_sum = 0
+            for s in segment:
+                sub_sum += s['value']
+
+            means.append(int(sub_sum/len(segment)))
+
+        return_data = {'means': means, 'start_timestamp': start_timestamp, 'stop_timestamp': stop_timestamp, 'resolution': segment_size}
+
+        return Response(return_data, status=status.HTTP_200_OK)
 
 
 # class UploadGeneratedSupplyData(APIView):

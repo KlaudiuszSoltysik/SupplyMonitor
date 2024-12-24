@@ -4,7 +4,9 @@ import pickle
 def generateSupplyData():
     current_timestamp = datetime.now()
     rounded_minutes = current_timestamp.minute - (current_timestamp.minute % 15)
-    rounded_timestamp = current_timestamp.replace(minute=rounded_minutes, second=0, microsecond=0)
+    rounded_timestamp = current_timestamp.replace(minute=rounded_minutes,
+                                                  second=0,
+                                                  microsecond=0)
 
     file_path = rf''
 

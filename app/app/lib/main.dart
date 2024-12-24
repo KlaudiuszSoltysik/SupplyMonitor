@@ -5,10 +5,10 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import 'main_page.dart';
 
-// TODO: Naprawić maile
-// TODO: Dodać ekrany autentykacji (reset hasła, logowanie, guzik wyloguj)
-// TODO: Przenieść call API pogody na serwer ?
-// TODO Sprawdzić ile waży cache aplikacji
+// TODO: Fix mailing
+// TODO: Auth
+// TODO: API calls
+// TODO: Max and min supply value
 
 class AppState extends ChangeNotifier {
   AppState() {
